@@ -1,0 +1,32 @@
+/* 修复瀑布流布局问题 */
+.waterfall-container {
+  display: flex;
+  gap: 12px;
+  padding: 0 12px;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.waterfall-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* 修复底部导航栏重叠问题 */
+.bottom-tab {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+/* 确保页面内容不会被底部导航遮挡 */
+.gallery-page {
+  padding-bottom: 60px;
+}

@@ -1,0 +1,22 @@
+<view class="bottom-tab-container">
+  <view class="bottom-tab">
+    <block wx:for="{{tabs}}" wx:key="id">
+      <view 
+        class="tab-item {{active === item.id ? 'active' : ''}}"
+        data-index="{{item.id}}"
+        data-page="{{item.page}}"
+        bindtap="onTabClick"
+      >
+        <van-icon 
+          name="{{active === item.id ? item.activeIcon : item.icon}}" 
+          size="20px"
+          color="{{active === item.id ? '#1677ff' : '#666666'}}"
+        />
+        <text class="tab-text {{active === item.id ? 'active' : ''}}">{{item.name}}</text>
+      </view>
+    </block>
+  </view>
+  
+  <!-- 安全区域适配 -->
+  <view class="safe-area"></view>
+</view>

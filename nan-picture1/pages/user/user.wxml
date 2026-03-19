@@ -1,0 +1,113 @@
+<view class="user-page page-container">
+  <!-- 自定义导航栏 -->
+  <view class="custom-nav-bar">
+    <text class="nav-title">个人中心</text>
+  </view>
+  
+  <scroll-view class="page-content" scroll-y>
+    <!-- 用户信息卡片 -->
+    <view class="user-card card">
+      <view class="user-avatar-section">
+        <van-image
+          src="{{userInfo.avatarUrl || 'https://img.yzcdn.cn/vant/cat.jpeg'}}"
+          width="64px"
+          height="64px"
+          round
+          fit="cover"
+        />
+      </view>
+      
+      <view class="user-info-section">
+        <view class="user-name">{{userInfo.userName || userInfo.userAccount || '未知用户'}}</view>
+        <view class="user-id">ID: {{userInfo.id}}</view>
+        <view class="user-role">
+          <van-tag 
+            type="{{userInfo.userRole === 'admin' ? 'danger' : 'primary'}}" 
+            size="small"
+          >
+            {{userInfo.userRole === 'admin' ? '管理员' : '普通用户'}}
+          </van-tag>
+        </view>
+      </view>
+      
+      <view class="edit-profile-btn" bindtap="onEditProfile">
+        <van-icon name="edit" size="20px" color="#1677ff" />
+      </view>
+    </view>
+    
+    <!-- 数据统计 -->
+    <view class="statistics-section card">
+      <view class="statistic-item">
+        <view class="statistic-number">{{statistics.uploadCount}}</view>
+        <view class="statistic-label">上传</view>
+      </view>
+      <view class="statistic-item">
+        <view class="statistic-number">{{statistics.likeCount}}</view>
+        <view class="statistic-label">获赞</view>
+      </view>
+      <view class="statistic-item">
+        <view class="statistic-number">{{statistics.followerCount}}</view>
+        <view class="statistic-label">粉丝</view>
+      </view>
+    </view>
+    
+    <!-- 功能菜单 -->
+    <view class="menu-section card">
+      <van-cell 
+        title="我的上传" 
+        icon="photo-o" 
+        is-link 
+        bindtap="onViewMyUploads"
+      />
+      <van-cell 
+        title="我的收藏" 
+        icon="star-o" 
+        is-link 
+        bindtap="onViewFavorites"
+      />
+      <van-cell 
+        title="设置" 
+        icon="setting-o" 
+        is-link 
+        bindtap="onSettings"
+      />
+      <van-cell 
+        title="关于我们" 
+        icon="info-o" 
+        is-link 
+        bindtap="onAbout"
+      />
+    </view>
+    
+    <!-- 退出登录按钮 -->
+    <view class="logout-section">
+      <van-button
+        type="default"
+        block
+        round
+        bindtap="onShowLogoutDialog"
+      >
+        退出登录
+      </van-button>
+    </view>
+  </scroll-view>
+  
+  <!-- 底部导航 -->
+  <bottom-tab active="{{activeTab}}" />
+  
+  <!-- 退出登录确认对话框 -->
+  <van-dialog
+    use-slot
+    title="确认退出"
+    show="{{showLogoutDialog}}"
+    show-cancel-button
+    confirm-button-color="#ff4d4f"
+    bind:confirm="onConfirmLogout"
+    bind:cancel="onHideLogoutDialog"
+  >
+    <view class="dialog-content">
+      <van-icon name="warning-o" size="48px" color="#ff4d4f" />
+      <text class="dialog-text">确定要退出登录吗？</text>
+    </view>
+  </van-dialog>
+</view>

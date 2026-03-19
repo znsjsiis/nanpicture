@@ -1,0 +1,298 @@
+const request = require('../../utils/request.js');
+
+Page({
+  data: {
+    pictures: [], // 图片列表
+    loading: false, // 加载状�?
+    hasMore: true, // 是否还有更多数据
+    currentPage: 1, // 当前页码
+    pageSize: 20, // 每页数量
+    activeTab: 1, // 底部导航选中�?
+    
+    // 瀑布流布局相关
+    columns: 2, // 列数
+    columnHeight: [0, 0], // 每列的高�?
+    columnItems: [[], []], // 每列的图片数�?
+    
+    // 搜索和筛�?
+    searchKeyword: '',
+    selectedTag: '',
+    tags: ['全部', '热门', '生活', '高清', '游戏', '影视', '汽车', '运动', '科技']
+  },
+
+  onLoad() {
+    console.log('图库页面加载');
+    // 同时加载图片和标�?
+    Promise.all([
+      this.loadPictures(),
+      this.loadTags()
+    ]).then(() => {
+      console.log('初始数据加载完成');
+    }).catch(error => {
+      console.error('初始数据加载失败:', error);
+    });
+  },
+  
+  onShow() {
+    console.log('图库页面显示');
+    // 页面显示时刷新数�?
+    this.refreshData();
+    // 确保标签重新加载
+    this.loadTags();
+  },
+
+  /**
+   * 下拉刷新
+   */
+  onPullDownRefresh() {
+    this.refreshData().then(() => {
+      wx.stopPullDownRefresh();
+    });
+  },
+
+  /**
+   * 上拉加载更多
+   */
+  onReachBottom() {
+    if (this.data.hasMore && !this.data.loading) {
+      this.loadMore();
+    }
+  },
+
+  /**
+   * 刷新数据
+   */
+  async refreshData() {
+    console.log('开始刷新数�?);
+    this.setData({
+      pictures: [],
+      columnItems: [[], []],
+      columnHeight: [0, 0],
+      currentPage: 1,
+      hasMore: true
+    });
+    
+    // 重新加载所有数�?
+    await Promise.all([
+      this.loadPictures(),
+      this.loadTags()
+    ]);
+    
+    console.log('数据刷新完成');
+  },
+
+  /**
+   * 加载图片数据
+   */
+  async loadPictures() {
+    if (this.data.loading || !this.data.hasMore) {
+      return;
+    }
+
+    this.setData({ loading: true });
+
+    try {
+      const params = {
+        current: this.data.currentPage,
+        pageSize: this.data.pageSize,
+        keyword: this.data.searchKeyword,
+        tag: this.data.selectedTag === '全部' ? '' : this.data.selectedTag
+      };
+
+      console.log('发送请求参�?', params);
+      
+      const result = await request.post('/picture/list/page/vo', params);
+      
+      console.log('API返回结果:', result);
+      
+      // 检查返回数据结�?
+      if (!result) {
+        console.warn('API返回空结�?);
+        this.setData({ hasMore: false });
+        return;
+      }
+      
+      if (result.records && result.records.length > 0) {
+        console.log('接收到的图片数据:', result.records);
+        
+        // 验证数据格式
+        result.records.forEach((pic, index) => {
+          console.log(`图片${index}数据结构:`, {
+            id: pic.id,
+            url: pic.url,
+            title: pic.title,
+            name: pic.name,
+            tags: pic.tags,
+            tagsType: Array.isArray(pic.tags) ? 'array' : typeof pic.tags,
+            tagsLength: pic.tags ? pic.tags.length : 0,
+            hasUrl: !!pic.url,
+            urlType: typeof pic.url
+          });
+                
+          // 详细检查标签数�?
+          if (pic.tags) {
+            console.log(`图片${index}的标签详�?`, pic.tags);
+            pic.tags.forEach((tag, tagIndex) => {
+              console.log(`  标签${tagIndex}:`, tag, typeof tag);
+            });
+          }
+        });
+        
+        // 处理瀑布流布局
+        this.processWaterfallLayout(result.records);
+        
+        this.setData({
+          currentPage: this.data.currentPage + 1,
+          hasMore: result.records.length >= this.data.pageSize
+        });
+      } else {
+        console.log('没有更多图片数据');
+        this.setData({ hasMore: false });
+      }
+    } catch (error) {
+      console.error('加载图片失败:', error);
+      wx.showToast({
+        title: '加载失败',
+        icon: 'none'
+      });
+    } finally {
+      this.setData({ loading: false });
+    }
+  },
+
+  /**
+   * 处理瀑布流布局
+   */
+  processWaterfallLayout(newPictures) {
+    console.log('处理瀑布流布局，图片数�?', newPictures.length);
+    const { columnItems, columnHeight } = this.data;
+    const updatedColumnItems = [...columnItems];
+    const updatedColumnHeight = [...columnHeight];
+
+    newPictures.forEach((picture, index) => {
+      console.log(`处理�?{index}张图�?`, picture);
+      // 找到高度最短的�?
+      const minHeightIndex = updatedColumnHeight.indexOf(Math.min(...updatedColumnHeight));
+      
+      // 添加到该�?
+      updatedColumnItems[minHeightIndex].push(picture);
+      
+      // 更新该列高度（估算图片高度）
+      const estimatedHeight = this.estimateImageHeight(picture);
+      updatedColumnHeight[minHeightIndex] += estimatedHeight;
+    });
+
+    console.log('更新后的列数�?', updatedColumnItems);
+    
+    this.setData({
+      columnItems: updatedColumnItems,
+      columnHeight: updatedColumnHeight
+    }, () => {
+      console.log('setData回调 - 当前数据:', this.data.columnItems);
+      console.log('第一列数�?', this.data.columnItems[0]);
+      console.log('第二列数�?', this.data.columnItems[1]);
+    });
+  },
+
+  /**
+   * 估算图片高度
+   */
+  estimateImageHeight(picture) {
+    // 假设图片宽度为屏幕宽度的一半减去间�?
+    const screenWidth = wx.getSystemInfoSync().windowWidth;
+    const imageWidth = (screenWidth - 24) / 2; // 减去padding和gap
+    
+    // 如果有宽高信息，按比例计算；否则使用默认高度
+    if (picture.width && picture.height) {
+      return (imageWidth / picture.width) * picture.height + 60; // 加上文字描述高度
+    }
+    return 200; // 默认高度
+  },
+
+  /**
+   * 加载更多
+   */
+  loadMore() {
+    this.loadPictures();
+  },
+
+  /**
+   * 加载标签分类
+   */
+  async loadTags() {
+    try {
+      console.log('开始加载标签分�?);
+      const result = await request.get('/picture/tag_category');
+      console.log('标签API返回结果:', result);
+      
+      if (result && result.tagList) {
+        const tags = ['全部', ...result.tagList];
+        console.log('处理后的标签列表:', tags);
+        this.setData({ tags });
+        console.log('设置后的data.tags:', this.data.tags);
+      } else {
+        console.warn('标签数据格式不正�?', result);
+      }
+    } catch (error) {
+      console.error('加载标签失败:', error);
+    }
+  },
+
+  /**
+   * 标签选择
+   */
+  onTagSelect(event) {
+    const tag = event.currentTarget.dataset.tag;
+    this.setData({
+      selectedTag: tag,
+      currentPage: 1,
+      hasMore: true
+    });
+    this.refreshData();
+  },
+
+  /**
+   * 搜索
+   */
+  onSearch() {
+    this.setData({
+      currentPage: 1,
+      hasMore: true
+    });
+    this.refreshData();
+  },
+
+  /**
+   * 输入框变�?
+   */
+  onSearchInput(event) {
+    this.setData({
+      searchKeyword: event.detail.value
+    });
+  },
+
+  /**
+   * 查看图片详情
+   */
+  onViewPicture(event) {
+    const { index, columnIndex } = event.currentTarget.dataset;
+    const picture = this.data.columnItems[columnIndex][index];
+    
+    wx.navigateTo({
+      url: `/pages/picture-detail/picture-detail?id=${picture.id}`
+    });
+  },
+
+  /**
+   * 预览图片
+   */
+  onPreviewImage(event) {
+    const { index, columnIndex } = event.currentTarget.dataset;
+    const picture = this.data.columnItems[columnIndex][index];
+    
+    wx.previewImage({
+      urls: [picture.url],
+      current: picture.url
+    });
+  }
+});

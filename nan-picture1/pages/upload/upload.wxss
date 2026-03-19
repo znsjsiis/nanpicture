@@ -1,0 +1,230 @@
+/* 上传页面样式 */
+.upload-page {
+  background-color: #f5f5f5;
+}
+
+.page-content {
+  height: calc(100vh - 44px - 50px - env(safe-area-inset-bottom));
+}
+
+/* 区块样式 */
+.section {
+  margin: 12px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
+}
+
+.section-desc {
+  font-size: 12px;
+  color: #999999;
+}
+
+/* 图片选择器 */
+.image-selector {
+  padding: 8px 0;
+}
+
+.selected-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.image-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+/* 状态覆盖层 */
+.status-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+}
+
+.status-overlay.uploading {
+  background-color: rgba(22, 119, 255, 0.8);
+}
+
+.status-overlay.success {
+  background-color: rgba(82, 196, 26, 0.8);
+}
+
+.status-overlay.fail {
+  background-color: rgba(255, 77, 79, 0.8);
+}
+
+.progress-text {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* 删除按钮 */
+.delete-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 添加图片按钮 */
+.add-image-btn {
+  aspect-ratio: 1;
+  border: 2px dashed #cccccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  transition: all 0.2s ease;
+}
+
+.add-image-btn:active {
+  border-color: #1677ff;
+  background: #f0f8ff;
+}
+
+.add-text {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #cccccc;
+}
+
+/* 错误消息 */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #fff2f0;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #ff4d4f;
+}
+
+/* 标签区域 */
+.tags-section {
+  padding: 16px 0;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.label-text {
+  font-size: 14px;
+  color: #333333;
+}
+
+.required {
+  color: #ff4d4f;
+  font-size: 14px;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tag-item {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-item:active {
+  transform: scale(0.95);
+}
+
+/* 上传控制 */
+.upload-controls {
+  padding: 16px;
+  background: #ffffff;
+  border-top: 1px solid #f0f0f0;
+}
+
+.cancel-btn {
+  margin-top: 12px;
+}
+
+/* 上传进度 */
+.upload-progress {
+  padding: 16px;
+  background: #ffffff;
+  border-top: 1px solid #f0f0f0;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #666666;
+}
+
+/* 响应式设计 */
+@media (min-width: 768px) {
+  .selected-images {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  
+  .section {
+    margin: 16px;
+    padding: 20px;
+  }
+  
+  .section-title {
+    font-size: 18px;
+  }
+  
+  .tag-item {
+    font-size: 14px;
+  }
+}
+
+/* 横屏适配 */
+@media (orientation: landscape) and (min-width: 768px) {
+  .page-content {
+    height: calc(100vh - 44px - 60px - env(safe-area-inset-bottom));
+  }
+  
+  .selected-images {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

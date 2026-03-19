@@ -1,0 +1,221 @@
+<view class="upload-page page-container">
+  <!-- 自定义导航栏 -->
+  <view class="custom-nav-bar">
+    <text class="nav-title">上传图片</text>
+  </view>
+  
+  <scroll-view class="page-content" scroll-y>
+    <!-- 图片选择区域 -->
+    <view class="section card">
+      <view class="section-header">
+        <text class="section-title">选择图片</text>
+        <text class="section-desc">最多可选择{{maxFiles}}张图片</text>
+      </view>
+      
+      <view class="image-selector">
+        <!-- 已选择的图片 -->
+        <view class="selected-images">
+          <block wx:for="{{fileList}}" wx:key="url">
+            <view class="image-item">
+              <van-image
+                src="{{item.url}}"
+                width="100%"
+                height="100%"
+                radius="8"
+                fit="cover"
+                bindtap="onPreviewImage"
+                data-index="{{index}}"
+              />
+              
+              <!-- 上传状态覆盖层 -->
+              <view class="status-overlay {{item.status}}" wx:if="{{item.status !== 'ready'}}">
+                <van-loading 
+                  wx:if="{{item.status === 'uploading'}}" 
+                  size="24px" 
+                  color="#ffffff"
+                />
+                <van-icon 
+                  wx:elif="{{item.status === 'success'}}" 
+                  name="success" 
+                  size="24px" 
+                  color="#52c41a"
+                />
+                <van-icon 
+                  wx:elif="{{item.status === 'fail'}}" 
+                  name="cross" 
+                  size="24px" 
+                  color="#ff4d4f"
+                />
+                
+                <!-- 上传进度 -->
+                <text class="progress-text" wx:if="{{item.status === 'uploading'}}">
+                  {{item.progress}}%
+                </text>
+              </view>
+              
+              <!-- 删除按钮 -->
+              <view 
+                class="delete-btn" 
+                wx:if="{{item.status === 'ready'}}"
+                bindtap="onDeleteImage"
+                data-index="{{index}}"
+              >
+                <van-icon name="cross" size="16px" color="#ffffff" />
+              </view>
+            </view>
+          </block>
+          
+          <!-- 添加图片按钮 -->
+          <view 
+            class="add-image-btn" 
+            wx:if="{{fileList.length < maxFiles}}"
+            bindtap="onSelectImages"
+          >
+            <van-icon name="plus" size="32px" color="#cccccc" />
+            <text class="add-text">添加图片</text>
+          </view>
+        </view>
+        
+        <!-- 错误提示 -->
+        <view class="error-message" wx:if="{{errors.files}}">
+          <van-icon name="warning-o" size="14px" color="#ff4d4f" />
+          <text>{{errors.files}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 图片信息填写 -->
+    <view class="section card">
+      <view class="section-header">
+        <text class="section-title">图片信息</text>
+      </view>
+      
+      <!-- 标题 -->
+      <van-cell-group>
+        <van-field
+          value="{{pictureInfo.title}}"
+          label="标题"
+          placeholder="请输入图片标题"
+          border="{{false}}"
+          required
+          maxlength="50"
+          data-field="title"
+          bind:change="onInputChange"
+        />
+        <view class="error-message" wx:if="{{errors.title}}">
+          <van-icon name="warning-o" size="14px" color="#ff4d4f" />
+          <text>{{errors.title}}</text>
+        </view>
+      </van-cell-group>
+      
+      <!-- 描述 -->
+      <van-cell-group>
+        <van-field
+          value="{{pictureInfo.description}}"
+          label="描述"
+          type="textarea"
+          placeholder="请输入图片描述（可选）"
+          border="{{false}}"
+          autosize
+          maxlength="200"
+          show-word-limit
+          data-field="description"
+          bind:change="onInputChange"
+        />
+      </van-cell-group>
+      
+      <!-- 分类 -->
+      <van-cell-group>
+        <van-cell 
+          title="分类" 
+          value="{{pictureInfo.categoryId || '请选择分类'}}" 
+          is-link
+          bindtap="onCategoryPickerShow"
+        />
+      </van-cell-group>
+      
+      <!-- 标签 -->
+      <view class="tags-section">
+        <view class="section-label">
+          <text class="label-text">标签</text>
+          <text class="required">*</text>
+        </view>
+        <view class="tags-container">
+          <van-tag
+            wx:for="{{tags}}"
+            wx:key="index"
+            class="tag-item"
+            size="medium"
+            type="{{pictureInfo.tags.indexOf(item) > -1 ? 'primary' : 'default'}}"
+            plain="{{pictureInfo.tags.indexOf(item) === -1}}"
+            data-tag="{{item}}"
+            bindtap="onTagSelect"
+          >
+            {{item}}
+          </van-tag>
+        </view>
+        <view class="error-message" wx:if="{{errors.tags}}">
+          <van-icon name="warning-o" size="14px" color="#ff4d4f" />
+          <text>{{errors.tags}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 上传控制 -->
+    <view class="upload-controls">
+      <van-button
+        type="primary"
+        block
+        round
+        disabled="{{fileList.length === 0}}"
+        loading="{{uploading}}"
+        bindtap="onStartUpload"
+      >
+        {{uploading ? '上传中...' : '开始上传'}}
+      </van-button>
+      
+      <van-button
+        wx:if="{{uploading}}"
+        class="cancel-btn"
+        block
+        round
+        bindtap="onCancelUpload"
+      >
+        取消上传
+      </van-button>
+    </view>
+    
+    <!-- 上传进度 -->
+    <view class="upload-progress" wx:if="{{uploading}}">
+      <view class="progress-header">
+        <text>上传进度</text>
+        <text>{{uploadProgress}}%</text>
+      </view>
+      <van-progress 
+        percentage="{{uploadProgress}}" 
+        stroke-width="6" 
+        color="#1677ff"
+        track-color="#f0f0f0"
+      />
+    </view>
+  </scroll-view>
+  
+  <!-- 底部导航 -->
+  <bottom-tab active="{{activeTab}}" />
+  
+  <!-- 分类选择弹窗 -->
+  <van-popup
+    show="{{showCategoryPicker}}"
+    position="bottom"
+    round
+    bind:close="onCategoryPickerClose"
+  >
+    <van-picker
+      show-toolbar
+      title="选择分类"
+      columns="{{categories}}"
+      bind:confirm="onCategoryConfirm"
+      bind:cancel="onCategoryPickerClose"
+    />
+  </van-popup>
+</view>

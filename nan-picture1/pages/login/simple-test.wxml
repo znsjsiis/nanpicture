@@ -1,0 +1,15 @@
+<view class="simple-login">
+  <view>简单测试页面</view>
+ 
+  
+  <!-- 简化版Vant输入框 -->
+  <van-field
+    value="{{vantInput}}"
+    placeholder="Vant输入测试"
+    border="{{false}}"
+    bind:input="onVantInput"
+  />
+  
+  <view>原生值: {{nativeInput}}</view>
+  <view>Vant值: {{vantInput}}</view>
+</view>

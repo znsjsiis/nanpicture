@@ -1,0 +1,76 @@
+/* 底部导航容器 */
+.bottom-tab-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+/* 底部导航栏 */
+.bottom-tab {
+  display: flex;
+  height: 50px;
+  background-color: #ffffff;
+  border-top: 1px solid #f0f0f0;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* tab项 */
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+  transition: all 0.2s ease;
+}
+
+.tab-item.active {
+  background-color: #f8faff;
+}
+
+/* tab图标 */
+.tab-item .van-icon {
+  margin-bottom: 2px;
+  transition: all 0.2s ease;
+}
+
+/* tab文字 */
+.tab-text {
+  font-size: 12px;
+  color: #666666;
+  transition: all 0.2s ease;
+}
+
+.tab-text.active {
+  color: #1677ff;
+  font-weight: 500;
+}
+
+/* 安全区域适配 */
+.safe-area {
+  height: env(safe-area-inset-bottom);
+  background-color: #ffffff;
+}
+
+/* 点击效果 */
+.tab-item:active {
+  opacity: 0.7;
+}
+
+/* 响应式设计 */
+@media (min-width: 768px) {
+  .bottom-tab {
+    height: 60px;
+  }
+  
+  .tab-text {
+    font-size: 14px;
+  }
+  
+  .tab-item .van-icon {
+    font-size: 24px;
+  }
+}

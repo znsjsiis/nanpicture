@@ -1,0 +1,102 @@
+<view class="gallery-page page-container">
+  <view class="custom-nav-bar">
+    <text class="nav-title">Gallery</text>
+  </view>
+  
+  <view class="search-section card">
+    <view class="search-box">
+      <van-field
+        value="{{searchKeyword}}"
+        placeholder="Search"
+        border="{{true}}"
+        bind:change="onSearchInput"
+        bind:confirm="onSearch"
+        left-icon="search"
+      />
+    </view>
+  </view>
+  
+  <scroll-view class="tags-section" scroll-x>
+    <view class="tags-container">
+      <van-tag
+        wx:for="{{tags}}"
+        wx:key="index"
+        class="tag-item"
+        type="{{selectedTag === item ? 'primary' : 'default'}}"
+        data-tag="{{item}}"
+        bindtap="onTagSelect"
+      >
+        {{item}}
+      </van-tag>
+    </view>
+  </scroll-view>
+  
+  <view class="waterfall-container" wx:if="{{columnItems[0] && columnItems[0].length > 0}}">
+    <view class="waterfall-column" wx:for="{{columnItems}}" wx:key="index" wx:for-item="column" wx:for-index="columnIndex">
+      <view 
+        class="picture-item"
+        wx:for="{{column}}"
+        wx:key="id"
+        wx:for-item="item"
+        wx:for-index="index"
+        bindtap="onViewPicture"
+        data-index="{{index}}"
+        data-column-index="{{columnIndex}}"
+      >
+        <view class="image-wrapper" bindtap="onPreviewImage" data-index="{{index}}" data-column-index="{{columnIndex}}">
+          <van-image
+            src="{{item.url}}"
+            width="100%"
+            height="200"
+            radius="8"
+            fit="cover"
+          />
+        </view>
+        
+        <view class="picture-info">
+          <view class="picture-title">{{item.name || 'Untitled'}}</view>
+          
+          <view class="stats-container">
+            <view class="stat-item">
+              <van-icon name="eye-o" size="14" color="#666" />
+              <text>{{item.viewCount || 0}}</text>
+            </view>
+            <view class="stat-item like-btn {{item.isLiked ? 'liked' : ''}}" 
+                  bindtap="onLikePicture" 
+                  data-id="{{item.id}}" 
+                  data-index="{{index}}" 
+                  data-column-index="{{columnIndex}}">
+              <van-icon name="{{item.isLiked ? 'like' : 'like-o'}}" 
+                        size="14" 
+                        color="{{item.isLiked ? '#ff4d4f' : '#666'}}" />
+              <text>{{item.likeCount}}</text>
+            </view>
+          </view>
+          
+          <view class="picture-tags" wx:if="{{item.tags && item.tags.length > 0}}">
+            <van-tag 
+              wx:for="{{item.tags.slice(0, 3)}}"
+              wx:key="index"
+              wx:for-item="tag"
+              size="mini"
+              type="primary"
+              plain
+            >
+              {{tag}}
+            </van-tag>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="empty-section" wx:elif="{{!loading}}">
+    <van-empty image="search" description="No pictures" />
+  </view>
+  
+  <view class="loading-section" wx:elif="{{loading}}">
+    <van-loading size="24px" vertical>Loading</van-loading>
+  </view>
+  
+  <bottom-tab active="{{activeTab}}" />
+</view>

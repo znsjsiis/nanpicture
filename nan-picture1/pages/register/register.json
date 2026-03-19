@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "注册",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "van-button": "@vant/weapp/button/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-image": "@vant/weapp/image/index"
+  }
+}
