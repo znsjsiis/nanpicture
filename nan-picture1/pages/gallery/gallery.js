@@ -1,5 +1,6 @@
 const request = require('../../utils/request.js');
 const likeService = require('../../utils/like.js');
+const auth = require('../../utils/auth.js');
 
 Page({
     data: {
@@ -258,5 +259,17 @@ Page({
                 icon: 'none'
             });
         }
+    },
+
+    /**
+     * 下拉刷新
+     */
+    onPullDownRefresh() {
+        console.log('pull down refresh');
+        this.refreshData().then(() => {
+            wx.stopPullDownRefresh();
+        }).catch(() => {
+            wx.stopPullDownRefresh();
+        });
     }
 });

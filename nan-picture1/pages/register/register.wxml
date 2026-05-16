@@ -1,113 +1,111 @@
-<view class="register-page">
-  <!-- 页面背景装饰 -->
-  <view class="background-decoration">
-    <view class="decoration-circle circle-1"></view>
-    <view class="decoration-circle circle-2"></view>
-    <view class="decoration-circle circle-3"></view>
+<view class="register-page-ios">
+  <!-- 背景渐变 -->
+  <view class="ios-register-bg"></view>
+
+  <!-- 返回按钮 -->
+  <view class="ios-back-btn" bindtap="onGoToLogin">
+    <van-icon name="arrow-left" size="20px" color="#FFFFFF" />
   </view>
-  
-  <scroll-view class="page-content" scroll-y>
-    <!-- 返回按钮 -->
-    <view class="back-button" bindtap="onGoToLogin">
-      <van-icon name="arrow-left" size="24px" color="#ffffff" />
+
+  <!-- Logo区域 -->
+  <view class="ios-register-header">
+    <view class="ios-register-logo">
+      <van-icon name="photo" size="48px" color="#FFFFFF" />
     </view>
-    
-    <!-- Logo区域 -->
-    <view class="logo-section">
-      <view class="logo-placeholder">
-        <van-icon name="photo" size="80px" color="#ffffff" />
-      </view>
-      <view class="app-name">创建账户</view>
-      <view class="app-slogan">加入小张云图库</view>
-    </view>
-    
-    <!-- 注册表单 -->
-    <view class="form-section">
-      <van-cell-group inset>
-        <!-- 用户名输入 -->
-        <van-field
+    <view class="ios-register-title">创建账户</view>
+    <view class="ios-register-slogan">加入小张云图库</view>
+  </view>
+
+  <!-- 注册表单 -->
+  <view class="ios-register-form">
+    <!-- 用户名 -->
+    <view class="ios-field-group">
+      <view class="ios-field">
+        <text class="ios-field-label">用户名</text>
+        <input
+          class="ios-field-input"
+          placeholder="请输入用户名"
+          placeholder-class="ios-field-placeholder"
           value="{{formData.userAccount}}"
-          label="用户名"
-          placeholder="4-20位字母数字下划线"
-          border="{{true}}"
-          clearable
-          maxlength="20"
           data-field="userAccount"
-          bind:input="onInputChange"
+          bindinput="onInputChange"
+          maxlength="20"
         />
-        <view class="error-message" wx:if="{{errors.userAccount}}">
-          <van-icon name="warning-o" size="14px" color="#ff4d4f" />
-          <text>{{errors.userAccount}}</text>
-        </view>
-        
-        <!-- 密码输入 -->
-        <van-field
+      </view>
+      <view class="ios-field-error" wx:if="{{errors.userAccount}}">
+        <van-icon name="warning-o" size="14px" color="#FF3B30" />
+        <text>{{errors.userAccount}}</text>
+      </view>
+    </view>
+
+    <!-- 密码 -->
+    <view class="ios-field-group">
+      <view class="ios-field">
+        <text class="ios-field-label">密码</text>
+        <input
+          class="ios-field-input"
+          placeholder="请输入密码"
+          placeholder-class="ios-field-placeholder"
+          password="{{!showPassword}}"
           value="{{formData.userPassword}}"
-          label="密码"
-          placeholder="6-20位密码"
-          border="{{true}}"
-          type="{{showPassword ? 'text' : 'password'}}"
-          maxlength="20"
           data-field="userPassword"
-          bind:input="onInputChange"
-          right-icon="{{showPassword ? 'eye' : 'closed-eye'}}"
-          bind:click-right-icon="onTogglePassword"
-          data-toggle-field="userPassword"
-        />
-        <view class="error-message" wx:if="{{errors.userPassword}}">
-          <van-icon name="warning-o" size="14px" color="#ff4d4f" />
-          <text>{{errors.userPassword}}</text>
-        </view>
-        
-        <!-- 确认密码输入 -->
-        <van-field
-          value="{{formData.checkPassword}}"
-          label="确认密码"
-          placeholder="请再次输入密码"
-          border="{{true}}"
-          type="{{showCheckPassword ? 'text' : 'password'}}"
+          bindinput="onInputChange"
           maxlength="20"
-          data-field="checkPassword"
-          bind:input="onInputChange"
-          right-icon="{{showCheckPassword ? 'eye' : 'closed-eye'}}"
-          bind:click-right-icon="onTogglePassword"
-          data-toggle-field="checkPassword"
         />
-        <view class="error-message" wx:if="{{errors.checkPassword}}">
-          <van-icon name="warning-o" size="14px" color="#ff4d4f" />
-          <text>{{errors.checkPassword}}</text>
+        <view class="ios-field-suffix" bindtap="onTogglePassword" data-field="userPassword">
+          <van-icon name="{{showPassword ? 'eye' : 'closed-eye'}}" size="20px" color="#8E8E93" />
         </view>
-      </van-cell-group>
-      
-      <!-- 注册按钮 -->
-      <view class="button-section">
-        <van-button
-          type="primary"
-          block
-          round
-          loading="{{loading}}"
-          disabled="{{loading}}"
-          bindtap="onSubmit"
-        >
-          {{loading ? '注册中...' : '注册'}}
-        </van-button>
       </view>
-      
-      <!-- 登录入口 -->
-      <view class="login-section">
-        <text>已有账号？</text>
-        <text class="login-link" bindtap="onGoToLogin">立即登录</text>
+      <view class="ios-field-error" wx:if="{{errors.userPassword}}">
+        <van-icon name="warning-o" size="14px" color="#FF3B30" />
+        <text>{{errors.userPassword}}</text>
       </view>
     </view>
-    
-    <!-- 用户协议 -->
-    <view class="agreement-section">
-      <text class="agreement-text">
-        注册即表示您同意
-        <text class="agreement-link">《用户协议》</text>
-        和
-        <text class="agreement-link">《隐私政策》</text>
-      </text>
+
+    <!-- 确认密码 -->
+    <view class="ios-field-group">
+      <view class="ios-field">
+        <text class="ios-field-label">确认</text>
+        <input
+          class="ios-field-input"
+          placeholder="请再次输入密码"
+          placeholder-class="ios-field-placeholder"
+          password="{{!showCheckPassword}}"
+          value="{{formData.checkPassword}}"
+          data-field="checkPassword"
+          bindinput="onInputChange"
+          maxlength="20"
+        />
+        <view class="ios-field-suffix" bindtap="onTogglePassword" data-field="checkPassword">
+          <van-icon name="{{showCheckPassword ? 'eye' : 'closed-eye'}}" size="20px" color="#8E8E93" />
+        </view>
+      </view>
+      <view class="ios-field-error" wx:if="{{errors.checkPassword}}">
+        <van-icon name="warning-o" size="14px" color="#FF3B30" />
+        <text>{{errors.checkPassword}}</text>
+      </view>
     </view>
-  </scroll-view>
+
+    <!-- 注册按钮 -->
+    <view class="ios-btn ios-btn-primary ios-register-btn {{loading ? 'loading' : ''}}" bindtap="onSubmit">
+      <van-loading wx:if="{{loading}}" size="20px" color="#FFFFFF" />
+      <text wx:else>{{loading ? '注册中...' : '注册'}}</text>
+    </view>
+
+    <!-- 登录入口 -->
+    <view class="ios-login-link">
+      <text class="ios-login-text">已有账号？</text>
+      <text class="ios-login-btn" bindtap="onGoToLogin">立即登录</text>
+    </view>
+  </view>
+
+  <!-- 用户协议 -->
+  <view class="ios-agreement">
+    <text class="ios-agreement-text">
+      注册即表示您同意
+      <text class="ios-agreement-link">《用户协议》</text>
+      和
+      <text class="ios-agreement-link">《隐私政策》</text>
+    </text>
+  </view>
 </view>

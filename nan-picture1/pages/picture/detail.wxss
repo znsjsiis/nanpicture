@@ -1,0 +1,258 @@
+/* iOS风格图片详情页 */
+
+.detail-page-ios {
+  background-color: #F2F2F7;
+  min-height: 100vh;
+}
+
+/* 导航栏 */
+.ios-nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 96px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid #C6C6C8;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+  padding-top: env(safe-area-inset-top);
+}
+
+.ios-nav-back {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 8px;
+}
+
+.ios-nav-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1C1C1E;
+}
+
+/* 加载状态 */
+.ios-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 200px;
+}
+
+.ios-loading-text {
+  font-size: 15px;
+  color: #8E8E93;
+  margin-top: 12px;
+}
+
+/* 错误状态 */
+.ios-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 160px;
+}
+
+.ios-error-text {
+  font-size: 17px;
+  color: #8E8E93;
+  margin-top: 16px;
+}
+
+/* 内容区域 */
+.ios-detail-content {
+  padding: 108px 16px 40px;
+}
+
+/* 图片展示 */
+.ios-image-section {
+  background: #FFFFFF;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 16px;
+}
+
+.ios-detail-image {
+  width: 100%;
+  min-height: 200px;
+  display: block;
+}
+
+/* 信息卡片 */
+.ios-detail-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ios-detail-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1C1C1E;
+  margin-bottom: 16px;
+}
+
+/* 统计信息 */
+.ios-detail-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F2F2F7;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.ios-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.ios-stat-num {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1C1C1E;
+  margin-top: 4px;
+}
+
+.ios-stat-label {
+  font-size: 12px;
+  color: #8E8E93;
+  margin-top: 2px;
+}
+
+.ios-stat-divider {
+  width: 0.5px;
+  height: 40px;
+  background: #C6C6C8;
+}
+
+.ios-stat.liked .ios-stat-num {
+  color: #FF3B30;
+}
+
+/* 标签 */
+.ios-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ios-tag-small {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  background: rgba(0, 122, 255, 0.1);
+  color: #007AFF;
+}
+
+/* 简介 */
+.ios-detail-desc {
+  padding-top: 8px;
+  border-top: 0.5px solid #C6C6C8;
+}
+
+.ios-desc-label {
+  font-size: 13px;
+  color: #8E8E93;
+  margin-bottom: 8px;
+}
+
+.ios-desc-text {
+  font-size: 15px;
+  color: #1C1C1E;
+  line-height: 1.6;
+}
+
+/* 详细信息组 */
+.ios-info-group {
+  background: #FFFFFF;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ios-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 0.5px solid #C6C6C8;
+}
+
+.ios-info-item:last-child {
+  border-bottom: none;
+}
+
+.ios-info-label {
+  font-size: 15px;
+  color: #8E8E93;
+}
+
+.ios-info-value {
+  font-size: 15px;
+  color: #1C1C1E;
+}
+
+/* 操作按钮 */
+.ios-detail-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.ios-action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 50px;
+}
+
+/* 推荐区域 */
+.ios-recommend {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ios-recommend-header {
+  margin-bottom: 16px;
+}
+
+.ios-recommend-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1C1C1E;
+}
+
+.ios-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 0;
+}
+
+.ios-empty-text {
+  font-size: 15px;
+  color: #8E8E93;
+  margin-top: 12px;
+}

@@ -1,5 +1,4 @@
 const auth = require('../../utils/auth.js');
-const validator = require('../../utils/validator.js');
 
 Page({
     data: {
@@ -59,11 +58,11 @@ Page({
         const errors = {};
 
         if (!userAccount) {
-            errors.userAccount = 'Please enter username';
+            errors.userAccount = '请输入用户名';
         }
 
         if (!userPassword) {
-            errors.userPassword = 'Please enter password';
+            errors.userPassword = '请输入密码';
         }
 
         this.setData({errors});
@@ -86,7 +85,7 @@ Page({
             await auth.login(userAccount, userPassword);
 
             wx.showToast({
-                title: 'Login success',
+                title: '登录成功',
                 icon: 'success'
             });
 
@@ -129,7 +128,7 @@ Page({
 
     onForgotPassword() {
         wx.showToast({
-            title: 'Feature coming soon',
+            title: '功能开发中',
             icon: 'none'
         });
     }

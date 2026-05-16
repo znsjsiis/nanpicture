@@ -1,0 +1,10 @@
+# 知识库 Markdown 文件配置
+
+# 在此目录下放置你的 Markdown 文件
+# 系统会自动读取这些文件并提供问答服务
+
+# 示例文件结构：
+# - company-policy.md    # 公司制度
+# - product-manual.md    # 产品手册
+# - faq.md              # 常见问题
+# - technical-doc.md     # 技术文档

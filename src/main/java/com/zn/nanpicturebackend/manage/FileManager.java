@@ -22,8 +22,15 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 文件管理
+ *
+ * @Deprecated 已废弃，改为使用upload包的模板方法优化
+ * 2023/09/05 10:00
+ **/
 @Slf4j
 @Service
+@Deprecated
 public class FileManager {
 
     @Resource
@@ -84,7 +91,7 @@ public class FileManager {
     /**
      * 临时文件清理
      *
-     * @param file
+     * @param
      */
     private static void deleteTempFile(File file) {
         if (file != null) {

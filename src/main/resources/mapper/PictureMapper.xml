@@ -2,11 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="generator.mapper.PictureMapper">
+<mapper namespace="com.zn.nanpicturebackend.mapper.PictureMapper">
 
-    <resultMap id="BaseResultMap" type="generator.domain.Picture">
+    <resultMap id="BaseResultMap" type="com.zn.nanpicturebackend.model.entity.Picture">
         <id property="id" column="id"/>
         <result property="url" column="url"/>
+        <result property="thumbnailUrl" column="thumbnailUrl" jdbcType="VARCHAR"/>
         <result property="name" column="name"/>
         <result property="introduction" column="introduction"/>
         <result property="category" column="category"/>
@@ -17,6 +18,7 @@
         <result property="picScale" column="picScale"/>
         <result property="picFormat" column="picFormat"/>
         <result property="userId" column="userId"/>
+        <result property="spaceId" column="spaceId"/>
         <result property="createTime" column="createTime"/>
         <result property="editTime" column="editTime"/>
         <result property="updateTime" column="updateTime"/>
@@ -30,7 +32,7 @@
 
     <sql id="Base_Column_List">
         id
-        ,url,name,introduction,category,tags,
+        ,url,thumbnailUrl,name,introduction,category,tags,
         picSize,picWidth,picHeight,picScale,picFormat,
         userId,createTime,editTime,updateTime,isDelete,
         likeCount,reviewStatus,reviewMessage,reviewerId,reviewTime

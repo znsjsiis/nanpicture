@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nan-picture-frontend 项目开发甘特图</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .project-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #007bff;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tech-item {
+            background: #007bff;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 800px;
+            margin-bottom: 30px;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .milestone {
+            background: #dc3545 !important;
+            border: 2px solid #dc3545;
+        }
+
+        .current-date {
+            background: #ffc107 !important;
+            border: 2px solid #ffc107;
+        }
+
+        .phase-divider {
+            background: #6c757d !important;
+            border: 2px solid #6c757d;
+        }
+
+        .today-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #dc3545;
+            opacity: 0.7;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>nan-picture-frontend 项目开发甘特图</h1>
+
+    <div class="project-info">
+        <h3>项目信息</h3>
+        <p><strong>项目名称：</strong>nan-picture-frontend（小张云图库前端）</p>
+        <p><strong>开发周期：</strong>2024年1月1日 - 2024年1月26日（共23天）</p>
+        <p><strong>项目状态：</strong>规划阶段</p>
+        <div class="tech-stack">
+            <span class="tech-item">Vue 3</span>
+            <span class="tech-item">TypeScript</span>
+            <span class="tech-item">Vite</span>
+            <span class="tech-item">Ant Design Vue</span>
+            <span class="tech-item">Vue Router</span>
+            <span class="tech-item">Pinia</span>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="ganttChart"></canvas>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background: #007bff;"></div>
+            <span>项目初始化</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #28a745;"></div>
+            <span>基础功能开发</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #17a2b8;"></div>
+            <span>核心业务开发</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ffc107;"></div>
+            <span>管理功能开发</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #6f42c1;"></div>
+            <span>优化和测试</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color milestone"></div>
+            <span>里程碑</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color phase-divider"></div>
+            <span>阶段分隔</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 甘特图数据
+    const ganttData = [
+        // 项目启动阶段
+        {
+            task: '项目启动',
+            start: new Date('2024-01-01'),
+            end: new Date('2024-01-01'),
+            color: '#6c757d',
+            type: 'milestone'
+        },
+        {
+            task: '需求分析',
+            start: new Date('2024-01-02'),
+            end: new Date('2024-01-03'),
+            color: '#6c757d',
+            dependencies: ['项目启动']
+        },
+        {
+            task: '技术选型',
+            start: new Date('2024-01-02'),
+            end: new Date('2024-01-03'),
+            color: '#6c757d',
+            dependencies: ['项目启动']
+        },
+
+        // 第一阶段：项目初始化
+        {
+            task: '第一阶段：项目初始化',
+            start: new Date('2024-01-04'),
+            end: new Date('2024-01-05'),
+            color: '#6c757d',
+            type: 'phase-divider'
+        },
+        {
+            task: '搭建项目框架',
+            start: new Date('2024-01-04'),
+            end: new Date('2024-01-04'),
+            color: '#007bff',
+            dependencies: ['需求分析']
+        },
+        {
+            task: '配置TypeScript',
+            start: new Date('2024-01-04'),
+            end: new Date('2024-01-04'),
+            color: '#007bff',
+            dependencies: ['搭建项目框架']
+        },
+        {
+            task: '配置ESLint和Prettier',
+            start: new Date('2024-01-04'),
+            end: new Date('2024-01-04'),
+            color: '#007bff',
+            dependencies: ['搭建项目框架']
+        },
+        {
+            task: '安装Ant Design Vue',
+            start: new Date('2024-01-05'),
+            end: new Date('2024-01-05'),
+            color: '#007bff',
+            dependencies: ['配置TypeScript']
+        },
+        {
+            task: '配置路由和状态管理',
+            start: new Date('2024-01-05'),
+            end: new Date('2024-01-05'),
+            color: '#007bff',
+            dependencies: ['安装Ant Design Vue']
+        },
+        {
+            task: '第一阶段完成',
+            start: new Date('2024-01-05'),
+            end: new Date('2024-01-05'),
+            color: '#dc3545',
+            type: 'milestone',
+            dependencies: ['配置路由和状态管理']
+        },
+
+        // 第二阶段：基础功能开发
+        {
+            task: '第二阶段：基础功能开发',
+            start: new Date('2024-01-06'),
+            end: new Date('2024-01-10'),
+            color: '#6c757d',
+            type: 'phase-divider'
+        },
+        {
+            task: '用户登录功能',
+            start: new Date('2024-01-06'),
+            end: new Date('2024-01-07'),
+            color: '#28a745',
+            dependencies: ['第一阶段完成']
+        },
+        {
+            task: '用户注册功能',
+            start: new Date('2024-01-06'),
+            end: new Date('2024-01-07'),
+            color: '#28a745',
+            dependencies: ['第一阶段完成']
+        },
+        {
+            task: '开发全局导航栏',
+            start: new Date('2024-01-07'),
+            end: new Date('2024-01-08'),
+            color: '#28a745',
+            dependencies: ['用户登录功能']
+        },
+        {
+            task: '实现基础布局',
+            start: new Date('2024-01-08'),
+            end: new Date('2024-01-09'),
+            color: '#28a745',
+            dependencies: ['开发全局导航栏']
+        },
+        {
+            task: '配置请求拦截器',
+            start: new Date('2024-01-09'),
+            end: new Date('2024-01-10'),
+            color: '#28a745',
+            dependencies: ['实现基础布局']
+        },
+        {
+            task: '第二阶段完成',
+            start: new Date('2024-01-10'),
+            end: new Date('2024-01-10'),
+            color: '#dc3545',
+            type: 'milestone',
+            dependencies: ['配置请求拦截器']
+        },
+
+        // 第三阶段：核心业务开发
+        {
+            task: '第三阶段：核心业务开发',
+            start: new Date('2024-01-11'),
+            end: new Date('2024-01-18'),
+            color: '#6c757d',
+            type: 'phase-divider'
+        },
+        {
+            task: '图片上传组件',
+            start: new Date('2024-01-11'),
+            end: new Date('2024-01-12'),
+            color: '#17a2b8',
+            dependencies: ['第二阶段完成']
+        },
+        {
+            task: '图片上传接口',
+            start: new Date('2024-01-11'),
+            end: new Date('2024-01-12'),
+            color: '#17a2b8',
+            dependencies: ['第二阶段完成']
+        },
+        {
+            task: '图片列表页面',
+            start: new Date('2024-01-13'),
+            end: new Date('2024-01-15'),
+            color: '#17a2b8',
+            dependencies: ['图片上传组件']
+        },
+        {
+            task: '图片详情页面',
+            start: new Date('2024-01-14'),
+            end: new Date('2024-01-16'),
+            color: '#17a2b8',
+            dependencies: ['图片列表页面']
+        },
+        {
+            task: '搜索功能',
+            start: new Date('2024-01-15'),
+            end: new Date('2024-01-16'),
+            color: '#17a2b8',
+            dependencies: ['图片列表页面']
+        },
+        {
+            task: '筛选功能',
+            start: new Date('2024-01-16'),
+            end: new Date('2024-01-17'),
+            color: '#17a2b8',
+            dependencies: ['搜索功能']
+        },
+        {
+            task: '个人中心页面',
+            start: new Date('2024-01-17'),
+            end: new Date('2024-01-18'),
+            color: '#17a2b8',
+            dependencies: ['图片详情页面']
+        },
+        {
+            task: '第三阶段完成',
+            start: new Date('2024-01-18'),
+            end: new Date('2024-01-18'),
+            color: '#dc3545',
+            type: 'milestone',
+            dependencies: ['个人中心页面']
+        },
+
+        // 第四阶段：管理功能开发
+        {
+            task: '第四阶段：管理功能开发',
+            start: new Date('2024-01-19'),
+            end: new Date('2024-01-23'),
+            color: '#6c757d',
+            type: 'phase-divider'
+        },
+        {
+            task: '用户管理后台',
+            start: new Date('2024-01-19'),
+            end: new Date('2024-01-20'),
+            color: '#ffc107',
+            dependencies: ['第三阶段完成']
+        },
+        {
+            task: '图片管理后台',
+            start: new Date('2024-01-20'),
+            end: new Date('2024-01-21'),
+            color: '#ffc107',
+            dependencies: ['用户管理后台']
+        },
+        {
+            task: '权限控制逻辑',
+            start: new Date('2024-01-21'),
+            end: new Date('2024-01-22'),
+            color: '#ffc107',
+            dependencies: ['图片管理后台']
+        },
+        {
+            task: '管理界面优化',
+            start: new Date('2024-01-22'),
+            end: new Date('2024-01-23'),
+            color: '#ffc107',
+            dependencies: ['权限控制逻辑']
+        },
+        {
+            task: '第四阶段完成',
+            start: new Date('2024-01-23'),
+            end: new Date('2024-01-23'),
+            color: '#dc3545',
+            type: 'milestone',
+            dependencies: ['管理界面优化']
+        },
+
+        // 第五阶段：优化和测试
+        {
+            task: '第五阶段：优化和测试',
+            start: new Date('2024-01-24'),
+            end: new Date('2024-01-26'),
+            color: '#6c757d',
+            type: 'phase-divider'
+        },
+        {
+            task: 'UI/UX优化',
+            start: new Date('2024-01-24'),
+            end: new Date('2024-01-24'),
+            color: '#6f42c1',
+            dependencies: ['第四阶段完成']
+        },
+        {
+            task: '性能优化',
+            start: new Date('2024-01-24'),
+            end: new Date('2024-01-25'),
+            color: '#6f42c1',
+            dependencies: ['UI/UX优化']
+        },
+        {
+            task: 'Bug修复',
+            start: new Date('2024-01-25'),
+            end: new Date('2024-01-25'),
+            color: '#6f42c1',
+            dependencies: ['性能优化']
+        },
+        {
+            task: '部署上线',
+            start: new Date('2024-01-26'),
+            end: new Date('2024-01-26'),
+            color: '#6f42c1',
+            dependencies: ['Bug修复']
+        },
+        {
+            task: '项目完成',
+            start: new Date('2024-01-26'),
+            end: new Date('2024-01-26'),
+            color: '#dc3545',
+            type: 'milestone',
+            dependencies: ['部署上线']
+        }
+    ];
+
+    // 创建甘特图
+    const ctx = document.getElementById('ganttChart').getContext('2d');
+
+    // 处理依赖关系
+    const datasets = {};
+    const tasks = [];
+    const colors = {};
+
+    ganttData.forEach((item, index) => {
+        const taskName = item.task;
+        tasks.push(taskName);
+
+        if (!datasets[taskName]) {
+            datasets[taskName] = {
+                label: taskName,
+                data: [],
+                backgroundColor: item.color,
+                borderColor: item.color,
+                borderWidth: 2,
+                borderRadius: 4,
+                borderSkipped: false,
+            };
+        }
+
+        datasets[taskName].data.push({
+            x: [item.start, item.end],
+            y: index
+        });
+    });
+
+    // 创建图表
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            datasets: Object.values(datasets)
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'nan-picture-frontend 项目开发甘特图',
+                    font: {
+                        size: 18
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function (context) {
+                            return context[0].dataset.label;
+                        },
+                        label: function (context) {
+                            const data = context.raw;
+                            const start = new Date(data.x[0]);
+                            const end = new Date(data.x[1]);
+                            const duration = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+                            return [
+                                `开始：${start.toLocaleDateString('zh-CN')}`,
+                                `结束：${end.toLocaleDateString('zh-CN')}`,
+                                `持续时间：${duration}天`
+                            ];
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                        displayFormats: {
+                            day: 'MM-dd'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: '时间轴'
+                    },
+                    min: new Date('2024-01-01'),
+                    max: new Date('2024-01-26')
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: '任务列表'
+                    },
+                    ticks: {
+                        callback: function (value) {
+                            return tasks[value] || '';
+                        }
+                    }
+                }
+            },
+            animation: {
+                duration: 1000
+            }
+        }
+    });
+</script>
+</body>
+</html>

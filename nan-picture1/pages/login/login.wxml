@@ -1,111 +1,96 @@
-<view class="login-page">
-  <!-- 页面背景装饰 -->
-  <view class="background-decoration">
-    <view class="decoration-circle circle-1"></view>
-    <view class="decoration-circle circle-2"></view>
-    <view class="decoration-circle circle-3"></view>
+<view class="login-page-ios">
+  <!-- 背景渐变 -->
+  <view class="ios-login-bg"></view>
+
+  <!-- Logo区域 -->
+  <view class="ios-login-header">
+    <view class="ios-login-logo">
+      <van-icon name="photo" size="48px" color="#FFFFFF" />
+    </view>
+    <view class="ios-login-title">小张云图库</view>
+    <view class="ios-login-slogan">记录美好瞬间</view>
   </view>
-  
-  <scroll-view class="page-content" scroll-y>
-    <!-- Logo区域 -->
-    <view class="logo-section">
-      <view class="logo-placeholder">
-        <van-icon name="photo" size="80px" color="#ffffff" />
-      </view>
-      <view class="app-name">小张云图库</view>
-      <view class="app-slogan">记录美好瞬间</view>
-    </view>
-    
-    <!-- 登录表单 -->
-    <view class="form-section">
-      <van-cell-group inset>
-  
-        
-        <!-- 用户名输入 -->
-        <van-field
+
+  <!-- 登录表单 -->
+  <view class="ios-login-form">
+    <!-- 用户名 -->
+    <view class="ios-field-group">
+      <view class="ios-field">
+        <text class="ios-field-label">用户名</text>
+        <input
+          class="ios-field-input"
+          placeholder="请输入用户名"
+          placeholder-class="ios-field-placeholder"
           value="{{formData.userAccount}}"
-          label="用户名"
-          placeholder="4-20位字母数字下划线"
-          border="{{true}}"
-          clearable
-          maxlength="20"
           data-field="userAccount"
-          bind:input="onInputChange"
-        />
-        <view class="error-message" wx:if="{{errors.userAccount}}">
-          <van-icon name="warning-o" size="14px" color="#ff4d4f" />
-          <text>{{errors.userAccount}}</text>
-        </view>
-        
-        <!-- 密码输入 -->
-        <van-field
-          value="{{formData.userPassword}}"
-          label="密码"
-          placeholder="6-20位密码"
-          border="{{true}}"
-          type="{{showPassword ? 'text' : 'password'}}"
+          bindinput="onInputChange"
           maxlength="20"
-          data-field="userPassword"
-          bind:input="onInputChange"
-          right-icon="{{showPassword ? 'eye' : 'closed-eye'}}"
-          bind:click-right-icon="onTogglePassword"
-          data-toggle-field="userPassword"
         />
-        <view class="error-message" wx:if="{{errors.userPassword}}">
-          <van-icon name="warning-o" size="14px" color="#ff4d4f" />
-          <text>{{errors.userPassword}}</text>
+      </view>
+      <view class="ios-field-error" wx:if="{{errors.userAccount}}">
+        <van-icon name="warning-o" size="14px" color="#FF3B30" />
+        <text>{{errors.userAccount}}</text>
+      </view>
+    </view>
+
+    <!-- 密码 -->
+    <view class="ios-field-group">
+      <view class="ios-field">
+        <text class="ios-field-label">密码</text>
+        <input
+          class="ios-field-input"
+          placeholder="请输入密码"
+          placeholder-class="ios-field-placeholder"
+          password="{{!showPassword}}"
+          value="{{formData.userPassword}}"
+          data-field="userPassword"
+          bindinput="onInputChange"
+          maxlength="20"
+        />
+        <view class="ios-field-suffix" bindtap="onTogglePassword">
+          <van-icon name="{{showPassword ? 'eye' : 'closed-eye'}}" size="20px" color="#8E8E93" />
         </view>
-      </van-cell-group>
-      
-      <!-- 忘记密码 -->
-      <view class="forgot-password" bindtap="onForgotPassword">
-        <text>忘记密码？</text>
       </view>
-      
-      <!-- 登录按钮 -->
-      <view class="button-section">
-        <van-button
-          type="primary"
-          block
-          round
-          loading="{{loading}}"
-          disabled="{{loading}}"
-          bindtap="onSubmit"
-        >
-          {{loading ? '登录中...' : '登录'}}
-        </van-button>
-      </view>
-      
-      <!-- 注册入口 -->
-      <view class="register-section">
-        <text>还没有账号？</text>
-        <text class="register-link" bindtap="onGoToRegister">立即注册</text>
+      <view class="ios-field-error" wx:if="{{errors.userPassword}}">
+        <van-icon name="warning-o" size="14px" color="#FF3B30" />
+        <text>{{errors.userPassword}}</text>
       </view>
     </view>
-    
-    <!-- 第三方登录（占位） -->
-    <view class="third-party-section">
-      <van-divider>其他登录方式</van-divider>
-      <view class="third-party-buttons">
-        <van-button
-          class="third-party-btn"
-          icon="wechat"
-          plain
-          hairline
-          disabled
-        >
-          微信登录
-        </van-button>
-        <van-button
-          class="third-party-btn"
-          icon="qq"
-          plain
-          hairline
-          disabled
-        >
-          QQ登录
-        </van-button>
+
+    <!-- 忘记密码 -->
+    <view class="ios-forgot-pwd" bindtap="onForgotPassword">
+      <text>忘记密码？</text>
+    </view>
+
+    <!-- 登录按钮 -->
+    <view class="ios-btn ios-btn-primary ios-login-btn {{loading ? 'loading' : ''}}" bindtap="onSubmit">
+      <van-loading wx:if="{{loading}}" size="20px" color="#FFFFFF" />
+      <text wx:else>{{loading ? '登录中...' : '登录'}}</text>
+    </view>
+
+    <!-- 注册入口 -->
+    <view class="ios-register-link">
+      <text class="ios-register-text">还没有账号？</text>
+      <text class="ios-register-btn" bindtap="onGoToRegister">立即注册</text>
+    </view>
+  </view>
+
+  <!-- 第三方登录 -->
+  <view class="ios-third-party">
+    <view class="ios-divider-text">
+      <view class="ios-divider-line"></view>
+      <text>其他登录方式</text>
+      <view class="ios-divider-line"></view>
+    </view>
+    <view class="ios-third-party-btns">
+      <view class="ios-third-btn wechat" disabled>
+        <van-icon name="chat" size="24px" color="#07C160" />
+        <text>微信登录</text>
+      </view>
+      <view class="ios-third-btn qq" disabled>
+        <van-icon name="qq" size="24px" color="#12B7F5" />
+        <text>QQ登录</text>
       </view>
     </view>
-  </scroll-view>
+  </view>
 </view>

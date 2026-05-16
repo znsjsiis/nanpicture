@@ -1,40 +1,42 @@
-<view class="gallery-page page-container">
-  <view class="custom-nav-bar">
-    <text class="nav-title">Gallery</text>
+<view class="gallery-page-ios">
+  <!-- iOS大标题导航栏 -->
+  <view class="ios-nav-bar">
+    <view class="ios-nav-title-large">图库</view>
   </view>
-  
-  <view class="search-section card">
-    <view class="search-box">
-      <van-field
-        value="{{searchKeyword}}"
-        placeholder="Search"
-        border="{{true}}"
-        bind:change="onSearchInput"
-        bind:confirm="onSearch"
-        left-icon="search"
-      />
-    </view>
+
+  <!-- 搜索栏 -->
+  <view class="ios-search-bar">
+    <van-icon name="search" size="16px" class="ios-search-icon" color="#8E8E93" />
+    <input
+      class="ios-search-input"
+      placeholder="搜索图片"
+      placeholder-class="ios-search-input-placeholder"
+      value="{{searchKeyword}}"
+      bindinput="onSearchInput"
+      bindconfirm="onSearch"
+    />
   </view>
-  
-  <scroll-view class="tags-section" scroll-x>
-    <view class="tags-container">
-      <van-tag
+
+  <!-- 标签筛选 -->
+  <scroll-view class="ios-tags-scroll" scroll-x show-scrollbar="{{false}}">
+    <view class="ios-tags-container">
+      <view
         wx:for="{{tags}}"
         wx:key="index"
-        class="tag-item"
-        type="{{selectedTag === item ? 'primary' : 'default'}}"
+        class="ios-tag {{selectedTag === item ? 'ios-tag-active' : ''}}"
         data-tag="{{item}}"
         bindtap="onTagSelect"
       >
         {{item}}
-      </van-tag>
+      </view>
     </view>
   </scroll-view>
-  
-  <view class="waterfall-container" wx:if="{{columnItems[0] && columnItems[0].length > 0}}">
-    <view class="waterfall-column" wx:for="{{columnItems}}" wx:key="index" wx:for-item="column" wx:for-index="columnIndex">
-      <view 
-        class="picture-item"
+
+  <!-- 瀑布流图片列表 -->
+  <view class="ios-waterfall" wx:if="{{columnItems[0] && columnItems[0].length > 0}}">
+    <view class="ios-waterfall-column" wx:for="{{columnItems}}" wx:key="index" wx:for-item="column" wx:for-index="columnIndex">
+      <view
+        class="ios-image-card"
         wx:for="{{column}}"
         wx:key="id"
         wx:for-item="item"
@@ -43,60 +45,76 @@
         data-index="{{index}}"
         data-column-index="{{columnIndex}}"
       >
-        <view class="image-wrapper" bindtap="onPreviewImage" data-index="{{index}}" data-column-index="{{columnIndex}}">
-          <van-image
-            src="{{item.url}}"
-            width="100%"
-            height="200"
-            radius="8"
-            fit="cover"
-          />
-        </view>
-        
-        <view class="picture-info">
-          <view class="picture-title">{{item.name || 'Untitled'}}</view>
-          
-          <view class="stats-container">
-            <view class="stat-item">
-              <van-icon name="eye-o" size="14" color="#666" />
-              <text>{{item.viewCount || 0}}</text>
+        <!-- 图片 -->
+        <image
+          class="ios-card-image"
+          src="{{item.url}}"
+          mode="widthFix"
+          lazy-load
+          bindtap="onPreviewImage"
+          data-index="{{index}}"
+          data-column-index="{{columnIndex}}"
+        />
+
+        <!-- 图片信息 -->
+        <view class="ios-card-content">
+          <view class="ios-card-title">{{item.name || '未命名'}}</view>
+
+          <view class="ios-card-stats">
+            <view class="ios-stat">
+              <van-icon name="eye-o" size="14px" color="#8E8E93" />
+              <text class="ios-stat-num">{{item.viewCount || 0}}</text>
             </view>
-            <view class="stat-item like-btn {{item.isLiked ? 'liked' : ''}}" 
-                  bindtap="onLikePicture" 
-                  data-id="{{item.id}}" 
-                  data-index="{{index}}" 
-                  data-column-index="{{columnIndex}}">
-              <van-icon name="{{item.isLiked ? 'like' : 'like-o'}}" 
-                        size="14" 
-                        color="{{item.isLiked ? '#ff4d4f' : '#666'}}" />
-              <text>{{item.likeCount}}</text>
+            <view
+              class="ios-stat ios-like-btn {{item.isLiked ? 'liked' : ''}}"
+              catchtap="onLikePicture"
+              data-id="{{item.id}}"
+              data-index="{{index}}"
+              data-column-index="{{columnIndex}}"
+            >
+              <van-icon
+                name="{{item.isLiked ? 'like' : 'like-o'}}"
+                size="14px"
+                color="{{item.isLiked ? '#FF3B30' : '#8E8E93'}}"
+              />
+              <text class="ios-stat-num {{item.isLiked ? 'liked' : ''}}">{{item.likeCount || 0}}</text>
             </view>
           </view>
-          
-          <view class="picture-tags" wx:if="{{item.tags && item.tags.length > 0}}">
-            <van-tag 
-              wx:for="{{item.tags.slice(0, 3)}}"
-              wx:key="index"
-              wx:for-item="tag"
-              size="mini"
-              type="primary"
-              plain
-            >
-              {{tag}}
-            </van-tag>
+
+          <!-- 标签 -->
+          <view class="ios-card-tags" wx:if="{{item.tags && item.tags.length > 0}}">
+            <text class="ios-tag-small" wx:for="{{item.tags.slice(0, 2)}}" wx:key="index" wx:for-item="tag">{{tag}}</text>
           </view>
         </view>
       </view>
     </view>
   </view>
-  
-  <view class="empty-section" wx:elif="{{!loading}}">
-    <van-empty image="search" description="No pictures" />
+
+  <!-- 空状态 -->
+  <view class="ios-empty" wx:elif="{{!loading}}">
+    <van-icon name="photo-o" size="48px" color="#C6C6C8" />
+    <text class="ios-empty-text">暂无图片</text>
   </view>
-  
-  <view class="loading-section" wx:elif="{{loading}}">
-    <van-loading size="24px" vertical>Loading</van-loading>
+
+  <!-- 加载状态 -->
+  <view class="ios-loading" wx:elif="{{loading}}">
+    <van-loading size="24px" color="#007AFF" />
+    <text class="ios-loading-text">加载中...</text>
   </view>
-  
+
+  <!-- 加载更多 -->
+  <view class="ios-load-more" wx:if="{{columnItems[0] && columnItems[0].length > 0 && !loading}}">
+    <view class="ios-load-more-btn" bindtap="onLoadMore" wx:if="{{hasMore}}">
+      <van-loading size="16px" color="#007AFF" />
+      <text class="ios-load-more-text">加载更多</text>
+    </view>
+    <view class="ios-no-more" wx:else>
+      <view class="ios-no-more-line"></view>
+      <text class="ios-no-more-text">已加载全部</text>
+      <view class="ios-no-more-line"></view>
+    </view>
+  </view>
+
+  <!-- 底部导航 -->
   <bottom-tab active="{{activeTab}}" />
 </view>

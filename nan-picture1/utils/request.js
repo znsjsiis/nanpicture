@@ -3,8 +3,6 @@
  * 封装微信小程序的request和uploadFile方法
  */
 
-const app = getApp();
-
 // 默认配置
 const DEFAULT_CONFIG = {
     timeout: 10000,
@@ -24,6 +22,13 @@ const STATUS_CODE_MAP = {
     503: '服务不可用',
     504: '网关超时'
 };
+
+/**
+ * 获取 App 实例（延迟调用，确保 App 已初始化）
+ */
+function getAppInstance() {
+    return getApp();
+}
 
 /**
  * 显示错误提示
@@ -57,6 +62,7 @@ function hideLoading() {
  * 获取请求头中的Cookie
  */
 function getRequestCookie() {
+    const app = getAppInstance();
     return app.globalData.cookie || wx.getStorageSync('cookie') || '';
 }
 
@@ -64,6 +70,7 @@ function getRequestCookie() {
  * 从响应头中提取并存储Cookie
  */
 function storeCookieFromHeader(headers) {
+    const app = getAppInstance();
     const setCookie = headers['Set-Cookie'] || headers['set-cookie'];
     if (setCookie) {
         const cookie = Array.isArray(setCookie) ? setCookie[0] : setCookie;
@@ -76,6 +83,7 @@ function storeCookieFromHeader(headers) {
  */
 function request(options) {
     const config = Object.assign({}, DEFAULT_CONFIG, options);
+    const app = getAppInstance();
 
     return new Promise((resolve, reject) => {
         // 显示加载提示
@@ -162,6 +170,7 @@ function request(options) {
  */
 function uploadFile(options) {
     const config = Object.assign({}, DEFAULT_CONFIG, options);
+    const app = getAppInstance();
 
     return new Promise((resolve, reject) => {
         const cookie = getRequestCookie();

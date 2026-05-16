@@ -1,160 +1,228 @@
-/* 用户中心页面样式 */
-.user-page {
-  background-color: #f5f5f5;
+/* iOS风格用户页面 */
+
+.user-page-ios {
+  background-color: #F2F2F7;
+  min-height: 100vh;
+  padding-bottom: 100px;
 }
 
-.page-content {
-  height: calc(100vh - 44px - 50px - env(safe-area-inset-bottom));
+/* 导航栏 */
+.ios-nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 96px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid #C6C6C8;
+  z-index: 1000;
+  padding-top: env(safe-area-inset-top);
+}
+
+.ios-nav-title-large {
+  font-size: 34px;
+  font-weight: 700;
+  color: #1C1C1E;
+  padding: 12px 16px 0;
 }
 
 /* 用户卡片 */
-.user-card {
+.ios-user-card {
+  margin: 108px 16px 16px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.ios-user-card-bg {
+  height: 80px;
+  background: linear-gradient(135deg, #007AFF 0%, #5856D6 50%, #AF52DE 100%);
+}
+
+.ios-user-card-content {
   display: flex;
   align-items: center;
-  padding: 20px;
-  margin: 12px;
+  padding: 16px;
+  margin-top: -32px;
 }
 
-.user-avatar-section {
-  margin-right: 16px;
+.ios-user-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 32px;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-.user-info-section {
+.ios-user-info {
   flex: 1;
+  margin-left: 16px;
+  padding-top: 24px;
 }
 
-.user-name {
+.ios-user-name {
   font-size: 20px;
-  font-weight: 500;
-  color: #333333;
-  margin-bottom: 4px;
-}
-
-.user-id {
-  font-size: 14px;
-  color: #999999;
-  margin-bottom: 8px;
-}
-
-.user-role {
-  display: inline-block;
-}
-
-.edit-profile-btn {
-  padding: 8px;
-  border-radius: 50%;
-  background: #f0f8ff;
-  transition: all 0.2s ease;
-}
-
-.edit-profile-btn:active {
-  background: #e6f4ff;
-  transform: scale(0.95);
-}
-
-/* 统计信息 */
-.statistics-section {
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
-  padding: 20px;
-  margin: 12px;
-}
-
-.statistic-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.statistic-number {
-  font-size: 24px;
   font-weight: 600;
-  color: #1677ff;
-  margin-bottom: 4px;
+  color: #1C1C1E;
 }
 
-.statistic-label {
-  font-size: 14px;
-  color: #666666;
+.ios-user-id {
+  font-size: 13px;
+  color: #8E8E93;
+  margin-top: 4px;
 }
 
-/* 菜单区域 */
-.menu-section {
-  margin: 12px;
-  padding: 0;
+.ios-user-badge {
+  padding-top: 24px;
+}
+
+.ios-badge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  background: rgba(0, 122, 255, 0.1);
+  color: #007AFF;
+}
+
+.ios-badge.admin {
+  background: rgba(255, 59, 48, 0.1);
+  color: #FF3B30;
+}
+
+/* 统计卡片 */
+.ios-stats-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border-radius: 16px;
+  margin: 0 16px 16px;
+  padding: 20px 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ios-stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.ios-stat-num {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1C1C1E;
+}
+
+.ios-stat-label {
+  font-size: 13px;
+  color: #8E8E93;
+  margin-top: 4px;
+}
+
+.ios-stat-divider {
+  width: 0.5px;
+  height: 40px;
+  background: #C6C6C8;
+}
+
+/* 菜单组 */
+.ios-menu-group {
+  margin: 16px 0;
+}
+
+.ios-group-header {
+  font-size: 13px;
+  font-weight: 500;
+  color: #8E8E93;
+  padding: 8px 16px 8px 32px;
+  text-transform: uppercase;
+}
+
+.ios-group-content {
+  background: #FFFFFF;
+  border-radius: 12px;
+  margin: 0 16px;
   overflow: hidden;
 }
 
-.menu-section .van-cell {
-  padding: 16px 20px;
+/* 列表项 */
+.ios-list-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 0.5px solid #C6C6C8;
+  min-height: 44px;
+  transition: background 0.2s ease;
 }
 
-.menu-section .van-cell:not(:last-child) {
-  border-bottom: 1px solid #f0f0f0;
+.ios-list-item:last-child {
+  border-bottom: none;
 }
 
-/* 退出登录区域 */
-.logout-section {
-  padding: 16px;
-  margin: 12px;
+.ios-list-item:active {
+  background: rgba(0, 0, 0, 0.05);
 }
 
-/* 对话框样式 */
-.dialog-content {
+.ios-list-item-icon {
+  width: 29px;
+  height: 29px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+.ios-list-item-content {
+  flex: 1;
+}
+
+.ios-list-item-title {
+  font-size: 17px;
+  color: #1C1C1E;
+}
+
+.ios-list-item-arrow {
+  color: #C6C6C8;
+}
+
+/* 退出登录 */
+.ios-logout-section {
+  margin-top: 32px;
+  padding: 0 16px;
+}
+
+.ios-btn-danger {
+  background: #FF3B30;
+  color: #FFFFFF;
+}
+
+.ios-btn-full {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 600;
+  border-radius: 12px;
+}
+
+/* 对话框 */
+.ios-dialog-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
+  padding: 24px 16px;
 }
 
-.dialog-text {
-  margin-top: 16px;
+.ios-dialog-text {
   font-size: 16px;
-  color: #333333;
-  text-align: center;
-}
-
-/* 响应式设计 */
-@media (min-width: 768px) {
-  .user-card {
-    padding: 24px;
-    margin: 16px;
-  }
-  
-  .user-name {
-    font-size: 24px;
-  }
-  
-  .statistic-number {
-    font-size: 28px;
-  }
-  
-  .statistics-section {
-    padding: 24px;
-  }
-  
-  .menu-section {
-    margin: 16px;
-  }
-  
-  .logout-section {
-    padding: 20px;
-    margin: 16px;
-  }
-}
-
-/* 横屏适配 */
-@media (orientation: landscape) and (min-width: 768px) {
-  .page-content {
-    height: calc(100vh - 44px - 60px - env(safe-area-inset-bottom));
-  }
-  
-  .user-card {
-    padding: 28px;
-  }
-  
-  .statistics-section {
-    padding: 28px;
-  }
+  color: #1C1C1E;
+  margin-top: 16px;
 }

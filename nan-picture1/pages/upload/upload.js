@@ -27,6 +27,10 @@ Page({
         this.loadCategoriesAndTags();
     },
 
+    onGoBack() {
+        wx.navigateBack();
+    },
+
     onShow() {
         if (!auth.isLoggedIn()) {
             wx.navigateTo({
@@ -71,7 +75,7 @@ Page({
 
         if (remainCount <= 0) {
             wx.showToast({
-                title: `Max ${this.data.maxFiles} images`,
+                title: `最多选择${this.data.maxFiles}张图片`,
                 icon: 'none'
             });
             return;
@@ -99,7 +103,7 @@ Page({
             fail: (err) => {
                 console.error('Select images failed:', err);
                 wx.showToast({
-                    title: 'Select images failed',
+                    title: '选择图片失败',
                     icon: 'none'
                 });
             }
@@ -166,15 +170,15 @@ Page({
         const errors = {};
 
         if (!title || title.trim() === '') {
-            errors.title = 'Please enter title';
+            errors.title = '请输入标题';
         }
 
         if (tags.length === 0) {
-            errors.tags = 'Please select at least one tag';
+            errors.tags = '请至少选择一个标签';
         }
 
         if (this.data.fileList.length === 0) {
-            errors.files = 'Please select at least one image';
+            errors.files = '请至少选择一张图片';
         }
 
         this.setData({errors});
@@ -201,7 +205,7 @@ Page({
             }
 
             wx.showToast({
-                title: 'Upload success',
+                title: '上传成功',
                 icon: 'success'
             });
 

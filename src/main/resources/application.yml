@@ -9,11 +9,21 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/nan_picture
-    username: root
-    password: 123456
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/nan_picture}
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:}
+  # 上传文件大小限制
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  redis:
+    database: 0
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    timeout: 5000
 
 mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
   configuration:
     # MyBatis 配置
     map-underscore-to-camel-case: false
@@ -44,3 +54,23 @@ knife4j:
 #    secretKey:
 #    region:
 #    bucket:
+
+# 豆包 API 配置
+doubao:
+  api:
+    # API 地址（火山引擎方舟大模型）
+    apiUrl: https://ark.cn-beijing.volces.com/api/v3
+    # API Key (在火山引擎控制台获取：https://console.volcengine.com/ark)
+    apiKey: ${DOUBAO_API_KEY:}
+    # 模型 ID (可选，默认使用 doubao-pro-4k)
+    modelId: doubao-pro-4k-240515
+    # 超时设置
+    connectTimeout: 5000
+    readTimeout: 30000
+
+# GitHub OAuth 配置（需在 GitHub 创建 OAuth App）
+github:
+  client-id: ${GITHUB_CLIENT_ID:your_client_id}
+  client-secret: ${GITHUB_CLIENT_SECRET:your_client_secret}
+  redirect-uri: http://localhost:8123/api/oauth/github/callback
+  frontend-url: http://localhost:5173

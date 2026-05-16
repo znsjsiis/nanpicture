@@ -1,6 +1,7 @@
 package com.zn.nanpicturebackend.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -54,6 +55,12 @@ public class User implements Serializable {
      * 用户角色：user/admin
      */
     private String userRole;
+
+    /**
+     * GitHub 用户ID
+     */
+    @TableField("github_id")
+    private String githubId;
 
     /**
      * 编辑时间

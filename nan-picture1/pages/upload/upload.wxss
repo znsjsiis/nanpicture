@@ -1,230 +1,284 @@
-/* 上传页面样式 */
-.upload-page {
-  background-color: #f5f5f5;
+/* iOS风格上传页面 */
+
+.upload-page-ios {
+  background-color: #F2F2F7;
+  min-height: 100vh;
 }
 
-.page-content {
-  height: calc(100vh - 44px - 50px - env(safe-area-inset-bottom));
+/* 导航栏 */
+.ios-nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 96px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid #C6C6C8;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+  padding-top: env(safe-area-inset-top);
 }
 
-/* 区块样式 */
-.section {
-  margin: 12px;
+.ios-nav-back {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 8px;
 }
 
-.section-header {
+.ios-nav-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1C1C1E;
+}
+
+/* 页面内容 */
+.ios-page-content {
+  padding: 108px 16px 120px;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 区块 */
+.ios-section {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ios-section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
 }
 
-.section-title {
-  font-size: 16px;
-  font-weight: 500;
-  color: #333333;
+.ios-section-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1C1C1E;
 }
 
-.section-desc {
-  font-size: 12px;
-  color: #999999;
+.ios-section-desc {
+  font-size: 13px;
+  color: #8E8E93;
 }
 
-/* 图片选择器 */
-.image-selector {
-  padding: 8px 0;
-}
-
-.selected-images {
+/* 图片网格 */
+.ios-image-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
-.image-item {
+.ios-image-item {
   position: relative;
   aspect-ratio: 1;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
-  background: #f0f0f0;
+  background: #F2F2F7;
+}
+
+.ios-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* 状态覆盖层 */
-.status-overlay {
+.ios-status-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #ffffff;
 }
 
-.status-overlay.uploading {
-  background-color: rgba(22, 119, 255, 0.8);
+.ios-status-overlay.uploading {
+  background: rgba(0, 122, 255, 0.85);
 }
 
-.status-overlay.success {
-  background-color: rgba(82, 196, 26, 0.8);
+.ios-status-overlay.success {
+  background: rgba(52, 199, 89, 0.85);
 }
 
-.status-overlay.fail {
-  background-color: rgba(255, 77, 79, 0.8);
-}
-
-.progress-text {
-  margin-top: 4px;
-  font-size: 12px;
-  font-weight: 500;
+.ios-status-overlay.fail {
+  background: rgba(255, 59, 48, 0.85);
 }
 
 /* 删除按钮 */
-.delete-btn {
+.ios-delete-btn {
   position: absolute;
   top: 6px;
   right: 6px;
   width: 24px;
   height: 24px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* 添加图片按钮 */
-.add-image-btn {
+/* 添加按钮 */
+.ios-add-btn {
   aspect-ratio: 1;
-  border: 2px dashed #cccccc;
-  border-radius: 8px;
+  border: 2px dashed #C6C6C8;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #fafafa;
+  background: #FFFFFF;
   transition: all 0.2s ease;
 }
 
-.add-image-btn:active {
-  border-color: #1677ff;
-  background: #f0f8ff;
+.ios-add-btn:active {
+  border-color: #007AFF;
+  background: rgba(0, 122, 255, 0.05);
 }
 
-.add-text {
+.ios-add-text {
+  font-size: 13px;
+  color: #8E8E93;
   margin-top: 8px;
-  font-size: 12px;
-  color: #cccccc;
 }
 
-/* 错误消息 */
-.error-message {
+/* 输入框 */
+.ios-field-group {
+  margin-bottom: 16px;
+}
+
+.ios-field {
+  display: flex;
+  align-items: center;
+  background: #F2F2F7;
+  border-radius: 12px;
+  padding: 0 16px;
+  min-height: 48px;
+}
+
+.ios-field-textarea {
+  align-items: flex-start;
+  padding-top: 12px;
+}
+
+.ios-field-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1C1C1E;
+  width: 48px;
+  flex-shrink: 0;
+}
+
+.ios-field-input {
+  flex: 1;
+  font-size: 17px;
+  color: #1C1C1E;
+  background: transparent;
+  min-height: 48px;
+}
+
+.ios-field-placeholder {
+  color: #C6C6C8;
+}
+
+.ios-field-required {
+  color: #FF3B30;
+  font-size: 17px;
+  margin-left: 4px;
+}
+
+.ios-field-error {
   display: flex;
   align-items: center;
   gap: 4px;
-  margin-top: 8px;
-  padding: 8px 12px;
-  background: #fff2f0;
-  border-radius: 6px;
-  font-size: 12px;
-  color: #ff4d4f;
+  padding: 8px 16px 0;
+  font-size: 13px;
+  color: #FF3B30;
 }
 
 /* 标签区域 */
-.tags-section {
-  padding: 16px 0;
+.ios-tags-section {
+  margin-top: 16px;
 }
 
-.section-label {
+.ios-section-label {
   display: flex;
   align-items: center;
   gap: 4px;
+  font-size: 15px;
+  color: #1C1C1E;
   margin-bottom: 12px;
 }
 
-.label-text {
-  font-size: 14px;
-  color: #333333;
-}
-
-.required {
-  color: #ff4d4f;
-  font-size: 14px;
-}
-
-.tags-container {
+.ios-tags-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
 }
 
-.tag-item {
-  cursor: pointer;
+.ios-tag {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  background: rgba(0, 122, 255, 0.1);
+  color: #007AFF;
   transition: all 0.2s ease;
 }
 
-.tag-item:active {
-  transform: scale(0.95);
+.ios-tag-active {
+  background: #007AFF;
+  color: #FFFFFF;
 }
 
-/* 上传控制 */
-.upload-controls {
-  padding: 16px;
-  background: #ffffff;
-  border-top: 1px solid #f0f0f0;
+/* 上传按钮 */
+.ios-upload-actions {
+  margin-top: 24px;
 }
 
-.cancel-btn {
-  margin-top: 12px;
+.ios-upload-btn {
+  width: 100%;
+  min-height: 50px;
 }
 
-/* 上传进度 */
-.upload-progress {
-  padding: 16px;
-  background: #ffffff;
-  border-top: 1px solid #f0f0f0;
+.ios-upload-btn.disabled {
+  opacity: 0.5;
 }
 
-.progress-header {
+/* 选择器头部 */
+.ios-picker-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: #666666;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 0.5px solid #C6C6C8;
 }
 
-/* 响应式设计 */
-@media (min-width: 768px) {
-  .selected-images {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-  
-  .section {
-    margin: 16px;
-    padding: 20px;
-  }
-  
-  .section-title {
-    font-size: 18px;
-  }
-  
-  .tag-item {
-    font-size: 14px;
-  }
+.ios-picker-cancel {
+  font-size: 17px;
+  color: #8E8E93;
 }
 
-/* 横屏适配 */
-@media (orientation: landscape) and (min-width: 768px) {
-  .page-content {
-    height: calc(100vh - 44px - 60px - env(safe-area-inset-bottom));
-  }
-  
-  .selected-images {
-    grid-template-columns: repeat(5, 1fr);
-  }
+.ios-picker-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1C1C1E;
+}
+
+.ios-picker-confirm {
+  font-size: 17px;
+  color: #007AFF;
+  font-weight: 500;
 }

@@ -1,23 +1,25 @@
-/* 底部导航容器 */
-.bottom-tab-container {
+/* iOS风格底部导航栏 */
+
+.ios-tab-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 999;
-}
-
-/* 底部导航栏 */
-.bottom-tab {
+  height: 83px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 0.5px solid #C6C6C8;
   display: flex;
-  height: 50px;
-  background-color: #ffffff;
-  border-top: 1px solid #f0f0f0;
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+  align-items: flex-start;
+  justify-content: space-around;
+  padding-top: 8px;
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 1000;
 }
 
-/* tab项 */
-.tab-item {
+/* Tab项 */
+.ios-tab-item {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -27,50 +29,60 @@
   transition: all 0.2s ease;
 }
 
-.tab-item.active {
-  background-color: #f8faff;
+.ios-tab-item.active {
+  transform: scale(1.05);
 }
 
-/* tab图标 */
-.tab-item .van-icon {
+.ios-tab-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 2px;
-  transition: all 0.2s ease;
 }
 
-/* tab文字 */
-.tab-text {
-  font-size: 12px;
-  color: #666666;
-  transition: all 0.2s ease;
-}
-
-.tab-text.active {
-  color: #1677ff;
+.ios-tab-text {
+  font-size: 10px;
   font-weight: 500;
+  color: #8E8E93;
+  transition: all 0.2s ease;
 }
 
-/* 安全区域适配 */
-.safe-area {
-  height: env(safe-area-inset-bottom);
-  background-color: #ffffff;
+.ios-tab-text.active {
+  color: #007AFF;
+  font-weight: 600;
+}
+
+/* 中间上传按钮容器 */
+.ios-tab-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0;
+}
+
+/* 中间凸起按钮 */
+.ios-tab-center-btn {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: -24px;
+  transition: all 0.2s ease;
+}
+
+.ios-tab-center-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
 }
 
 /* 点击效果 */
-.tab-item:active {
+.ios-tab-item:active {
   opacity: 0.7;
-}
-
-/* 响应式设计 */
-@media (min-width: 768px) {
-  .bottom-tab {
-    height: 60px;
-  }
-  
-  .tab-text {
-    font-size: 14px;
-  }
-  
-  .tab-item .van-icon {
-    font-size: 24px;
-  }
 }

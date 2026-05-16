@@ -1,5 +1,18 @@
 ### Custom ###
 application-local.yml
+.env
+.env.*
+*.log
+
+### Dependencies ###
+node_modules/
+**/node_modules/
+
+### Build output ###
+dist/
+out/
+fronted/dist/
+nan-picture1/node_modules/
 
 HELP.md
 target/
@@ -23,7 +36,7 @@ target/
 *.ipr
 
 ### NetBeans ###
-/nbproject/private/
+/nbproject/private/1
 /nbbuild/
 /dist/
 /nbdist/

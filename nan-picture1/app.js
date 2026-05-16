@@ -1,6 +1,9 @@
+const config = require('./config.js');
+
 App({
     globalData: {
-        baseURL: "http://localhost:8123/api",
+        baseURL: config.baseURL,
+        uploadURL: config.uploadURL,
         user: null,
         cookie: "",
         // Vant Weapp 配置

@@ -1,22 +1,24 @@
-<view class="bottom-tab-container">
-  <view class="bottom-tab">
-    <block wx:for="{{tabs}}" wx:key="id">
-      <view 
-        class="tab-item {{active === item.id ? 'active' : ''}}"
-        data-index="{{item.id}}"
-        data-page="{{item.page}}"
-        bindtap="onTabClick"
-      >
-        <van-icon 
-          name="{{active === item.id ? item.activeIcon : item.icon}}" 
-          size="20px"
-          color="{{active === item.id ? '#1677ff' : '#666666'}}"
-        />
-        <text class="tab-text {{active === item.id ? 'active' : ''}}">{{item.name}}</text>
-      </view>
-    </block>
+<view class="ios-tab-bar">
+  <!-- 左侧Tab -->
+  <view class="ios-tab-item {{active === 0 ? 'active' : ''}}" data-index="0" data-page="/pages/user/user" bindtap="onTabClick">
+    <view class="ios-tab-icon">
+      <van-icon name="{{active === 0 ? 'manager' : 'manager-o'}}" size="24px" color="{{active === 0 ? '#007AFF' : '#8E8E93'}}" />
+    </view>
+    <text class="ios-tab-text {{active === 0 ? 'active' : ''}}">我的</text>
   </view>
-  
-  <!-- 安全区域适配 -->
-  <view class="safe-area"></view>
+
+  <!-- 中间上传按钮 -->
+  <view class="ios-tab-center" bindtap="onTabClick" data-index="2" data-page="/pages/upload/upload">
+    <view class="ios-tab-center-btn">
+      <van-icon name="plus" size="28px" color="#FFFFFF" />
+    </view>
+  </view>
+
+  <!-- 右侧Tab -->
+  <view class="ios-tab-item {{active === 1 ? 'active' : ''}}" data-index="1" data-page="/pages/gallery/gallery" bindtap="onTabClick">
+    <view class="ios-tab-icon">
+      <van-icon name="{{active === 1 ? 'photo' : 'photo-o'}}" size="24px" color="{{active === 1 ? '#007AFF' : '#8E8E93'}}" />
+    </view>
+    <text class="ios-tab-text {{active === 1 ? 'active' : ''}}">图库</text>
+  </view>
 </view>

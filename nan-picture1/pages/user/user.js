@@ -88,8 +88,9 @@ Page({
      * 编辑个人信息
      */
     onEditProfile() {
-        wx.navigateTo({
-            url: '/pages/profile-edit/profile-edit'
+        wx.showToast({
+            title: '功能开发中',
+            icon: 'none'
         });
     },
 
@@ -97,8 +98,9 @@ Page({
      * 查看我的上传
      */
     onViewMyUploads() {
-        wx.navigateTo({
-            url: '/pages/my-uploads/my-uploads'
+        wx.showToast({
+            title: '功能开发中',
+            icon: 'none'
         });
     },
 
@@ -106,8 +108,9 @@ Page({
      * 查看收藏
      */
     onViewFavorites() {
-        wx.navigateTo({
-            url: '/pages/favorites/favorites'
+        wx.showToast({
+            title: '功能开发中',
+            icon: 'none'
         });
     },
 
@@ -115,8 +118,9 @@ Page({
      * 设置页面
      */
     onSettings() {
-        wx.navigateTo({
-            url: '/pages/settings/settings'
+        wx.showToast({
+            title: '功能开发中',
+            icon: 'none'
         });
     },
 
@@ -124,8 +128,9 @@ Page({
      * 关于我们
      */
     onAbout() {
-        wx.navigateTo({
-            url: '/pages/about/about'
+        wx.showToast({
+            title: '功能开发中',
+            icon: 'none'
         });
     },
 
